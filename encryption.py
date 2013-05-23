@@ -17,7 +17,11 @@ key1 = 'siddharth kannan. this is a long key'
 encryptor = ARC4.new(key1)
 decryptor = ARC4.new(key1)
 
+e = encryptor.encrypt
+d = decryptor.decrypt
+
 al = []
+als = []
 
 def decryptAll():
 
@@ -32,7 +36,8 @@ def decryptAll():
 
                 i = i[:-1]
 
-        print decryptor.decrypt(i) 
+        b = decryptor.decrypt(i)
+        als.append(b)
 
         filout.write(decryptor.decrypt(i) + '\n')
 
@@ -60,12 +65,6 @@ def encryptAll():
 
                 i = i[:-1]
 
-        print i
-        al.append(encryptor.encrypt(i))
-
-        print
-        print
-
         filout.write(encryptor.encrypt(i) + '\n')
 
 
@@ -78,3 +77,13 @@ def encryptAll():
     os.rename('temp','viper')
 
     return True
+##
+##encryptAll()
+##print
+##print
+##
+##for i in al:
+##
+##    print i
+
+
