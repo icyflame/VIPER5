@@ -12,10 +12,12 @@ from Crypto.Cipher import *
 global encryptor
 global decryptor
 
-key1 = 'siddharth kannan'
+key1 = 'siddharth kannan. this is a long key'
 
-encryptor = AES.new(key1)
-decryptor = AES.new(key1)
+encryptor = ARC4.new(key1)
+decryptor = ARC4.new(key1)
+
+al = []
 
 def decryptAll():
 
@@ -24,9 +26,13 @@ def decryptAll():
 
     for i in filin:
 
-        while i[-1] == '\n' or i[-1] == '\r':
+        if not i == '':
 
-            i = i[:-1]
+            while i[-1] == '\n' or i[-1] == '\r':
+
+                i = i[:-1]
+
+        print decryptor.decrypt(i) 
 
         filout.write(decryptor.decrypt(i) + '\n')
 
@@ -48,9 +54,17 @@ def encryptAll():
 
     for i in filin:
 
-        while i[-1] == '\n' or i[-1] == '\r':
+        if not i == '':
 
-            i = i[:-1]
+            while i[-1] == '\n' or i[-1] == '\r':
+
+                i = i[:-1]
+
+        print i
+        al.append(encryptor.encrypt(i))
+
+        print
+        print
 
         filout.write(encryptor.encrypt(i) + '\n')
 
@@ -62,3 +76,5 @@ def encryptAll():
     import os
     os.remove('viper')
     os.rename('temp','viper')
+
+    return True
