@@ -12,7 +12,7 @@ from Crypto.Cipher import *
 global encryptor
 global decryptor
 
-key1 = 'siddharth kannan. this is a long key'
+key1 = 'developedbysiddharthkannan'
 
 encryptor = ARC4.new(key1)
 decryptor = ARC4.new(key1)
