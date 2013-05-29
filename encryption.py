@@ -14,12 +14,6 @@ global decryptor
 
 key1 = 'developedbysiddharthkannan'
 
-encryptor = ARC4.new(key1)
-decryptor = ARC4.new(key1)
-
-e = encryptor.encrypt
-d = decryptor.decrypt
-
 al = []
 als = []
 
@@ -28,19 +22,17 @@ def decryptAll():
     filin = open('viper','r')
     filout = open('temp','w')
 
-    for i in filin:
+    i = filin.read()
 
-        if not i == '':
+    import json
 
-            while i[-1] == '\n' or i[-1] == '\r':
+    decrypted = ARC4.new(key1).decrypt(i)
 
-                i = i[:-1]
+    jsonDecoded = json.loads(decrypted)
 
-        b = decryptor.decrypt(i)
-        als.append(b)
+    for i in jsonDecoded.keys():
 
-        filout.write(decryptor.decrypt(i) + '\n')
-
+        filout.write(jsonDecoded[i])
 
     filin.close()
 
@@ -57,16 +49,21 @@ def encryptAll():
     filin = open('viper','r')
     filout = open('temp','w')
 
-    for i in filin:
+    import json
 
-        if not i == '':
+    data = filin.readlines()
 
-            while i[-1] == '\n' or i[-1] == '\r':
+    dicts = {}
 
-                i = i[:-1]
+    for i in range(len(data)):
 
-        filout.write(encryptor.encrypt(i) + '\n')
+        dicts[i] = data[i]
 
+    jsonCoded = json.dumps(dicts)
+
+    encrypted = ARC4.new(key1).encrypt(jsonCoded)
+
+    filout.write(encrypted)    
 
     filin.close()
 
@@ -77,13 +74,3 @@ def encryptAll():
     os.rename('temp','viper')
 
     return True
-##
-##encryptAll()
-##print
-##print
-##
-##for i in al:
-##
-##    print i
-
-

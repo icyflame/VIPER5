@@ -1054,14 +1054,20 @@ are: %s' % str(self.getnumrec()))
 
 import encryption
 
-encryption.decryptAll()
+filin = open('viper','r')
 
-print 'started'
+line = filin.readline()
+
+if not line.find('username') == -1:
+
+    filin.close()
+
+    encryption.encryptAll()
+
+encryption.decryptAll()
 
 app = VIPER()
 
 mainloop()
 
 encryption.encryptAll()
-
-print 'ended'
