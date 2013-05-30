@@ -78,8 +78,6 @@ import tkFont
 
 import string
 
-fileName = 'viper'
-
 salt = 'developedbysiddharthkannan'
 
 SHOW_TOPBAR = True  ##varibale will control whether the top bar with the three close, minimise, restore buttons
@@ -120,13 +118,13 @@ class VIPER(object):
         root = self.window
 
         # make it cover the entire screen
-##        w, h = root.winfo_screenwidth(), root.winfo_screenheight()
-##        root.overrideredirect(not SHOW_TOPBAR)
-##        root.geometry("%dx%d+0+0" % (w, h))
-##
-##
-##        self.w = w
-##        self.h = h
+        w, h = root.winfo_screenwidth(), root.winfo_screenheight()
+        root.overrideredirect(not SHOW_TOPBAR)
+        root.geometry("%dx%d+0+0" % (w, h))
+
+
+        self.w = w
+        self.h = h
         
         self.initBindings()
 
@@ -365,6 +363,8 @@ detected. Sorry. We can\'t allow you to continue. Goodbye.')
 
         a = isolate(app)
 
+        self.win.deiconify()
+
         isEmpty = True
 
         for i in a:
@@ -388,8 +388,6 @@ fields empty. We will not write it to the file')
 
         tkMessageBox.showinfo('Success','The operation was successful. The new record\
  was written to file')
-        
-        self.win.deiconify()
 
 
     ###########################################
@@ -648,6 +646,8 @@ fields empty. We will not write it to the file')
 
             newrec = modRec(thisrecord)
 
+            self.window.deiconify()
+
             if newrec.isEmpty():
                 tkMessageBox.showinfo('warning','all fields of new record are \
 empty. we will not make any changes to the file')
@@ -699,8 +699,6 @@ to the original record. no change will be made in the file')
             self.rearrangeFiles()
 
             tkMessageBox.showinfo('message','the record was modified')
-
-            self.window.deiconify()
 
             self.modify()   
 
@@ -1066,8 +1064,25 @@ if not line.find('username') == -1:
 
 encryption.decryptAll()
 
+##Renaming the file for better safety. Using a '.' before
+##the filename ensures that it remains hidden in unix systems.
+
+import os
+import time
+import hashlib        
+
+newFileName = '.' + hashlib.sha1(str(time.time())).hexdigest()
+
+os.rename('viper',newFileName)
+
+fileName = newFileName
+
+##Inintialising the application
+              
 app = VIPER()
 
 mainloop()
+
+os.rename(newFileName,'viper')
 
 encryption.encryptAll()
