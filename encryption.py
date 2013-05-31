@@ -22,17 +22,21 @@ def decryptAll():
     filin = open('viper','r')
     filout = open('temp','w')
 
+    
+
     i = filin.read()
 
-    import json
+    if not i == '':  ##only if the file is not empty
 
-    decrypted = ARC4.new(key1).decrypt(i)
+        import json
 
-    jsonDecoded = json.loads(decrypted)
+        decrypted = ARC4.new(key1).decrypt(i)
 
-    for i in jsonDecoded.keys():
+        jsonDecoded = json.loads(decrypted)
 
-        filout.write(jsonDecoded[i])
+        for i in jsonDecoded.keys():
+
+            filout.write(jsonDecoded[i])
 
     filin.close()
 
@@ -53,17 +57,19 @@ def encryptAll():
 
     data = filin.readlines()
 
-    dicts = {}
+    if not data == []:  ##only if the file is not empty
 
-    for i in range(len(data)):
+        dicts = {}
 
-        dicts[i] = data[i]
+        for i in range(len(data)):
 
-    jsonCoded = json.dumps(dicts)
+            dicts[i] = data[i]
 
-    encrypted = ARC4.new(key1).encrypt(jsonCoded)
+        jsonCoded = json.dumps(dicts)
 
-    filout.write(encrypted)    
+        encrypted = ARC4.new(key1).encrypt(jsonCoded)
+
+        filout.write(encrypted)
 
     filin.close()
 

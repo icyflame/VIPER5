@@ -1045,6 +1045,16 @@ are: %s' % str(self.getnumrec()))
 ##        self.window.after(8000,self.window.destroy)
 
 
+try:
+
+    filin = open('viper','r')
+
+except IOError:
+
+    filin = open('viper','w')
+
+filin.close()
+
 import encryption
 
 filin = open('viper','r')
