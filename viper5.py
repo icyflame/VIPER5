@@ -288,11 +288,6 @@ class VIPER(object):
     def checkpoint(self):
 
         ##first take the masterKey from the file
-
-        print 'checkpoint encountered'
-
-        return
-
         try:
 
             inFile = open('mast','r')
