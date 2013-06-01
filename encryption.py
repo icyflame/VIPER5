@@ -20,9 +20,7 @@ als = []
 def decryptAll():
 
     filin = open('viper','r')
-    filout = open('temp','w')
-
-    
+    filout = open('temp','w')    
 
     i = filin.read()
 
