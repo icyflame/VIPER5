@@ -995,6 +995,9 @@ are: %s' % str(self.getnumrec()))
         self.frame.destroy()
         
         ##Do the essential before the asthetics!
+
+        global flag
+        flag = True
         
         os.rename(newFileName,'viper')
 
@@ -1063,6 +1066,9 @@ are: %s' % str(self.getnumrec()))
         
         os.rename(newFileName,'viper')
 
+        global flag
+        flag = True
+
         encryption.encryptAll()
 
         self.window.after(8000,self.window.destroy)
@@ -1110,8 +1116,23 @@ os.rename('viper',newFileName)
 
 fileName = newFileName
 
+##there is a possiblity that the user may close the application without
+##pressing the quit button. But by pressin the close button in the top
+##right corner. To handle this we need a flag:
+
+flag = False  ##if encryption is done then this will be made to True.
+
 ##Inintialising the application
               
 app = VIPER()
 
 mainloop()
+
+
+if not flag:
+
+    os.rename(fileName,'viper')
+
+    encryption.encryptAll()
+
+    self.window.after(8000,self.window.destroy)
