@@ -934,6 +934,8 @@ are: %s' % str(self.getnumrec()))
         att = sha1(attempt1)
         att = att.hexdigest()
 
+
+
         inFile.write(att)
 
         inFile.close()
@@ -991,6 +993,12 @@ are: %s' % str(self.getnumrec()))
         '''will be called if the user enters the wrong master password'''
 
         self.frame.destroy()
+        
+        ##Do the essential before the asthetics!
+        
+        os.rename(newFileName,'viper')
+
+        encryption.encryptAll()
 
         self.reinitialise()
 
@@ -1024,8 +1032,6 @@ are: %s' % str(self.getnumrec()))
         '''function that will destroy the present window and then create a new
             window that will give the credits'''
 
-##        self.window.destroy()
-
         self.reinitialise()
 
         self.frame.destroy()
@@ -1052,10 +1058,17 @@ are: %s' % str(self.getnumrec()))
         c+=1
         Label(r,text='Application will quit in 8 seconds.',font=self.big).grid(row=c,column=0)
         c+=1
+        
+        ##Do the essential before the asthetics!
+        
+        os.rename(newFileName,'viper')
 
-        self.window.destroy()
+        encryption.encryptAll()
 
-##        self.window.after(8000,self.window.destroy)
+        self.window.after(8000,self.window.destroy)
+
+
+##checking to see if the file is there. If not create a new empty file.
 
 
 try:
@@ -1067,6 +1080,8 @@ except IOError:
     filin = open('viper','w')
 
 filin.close()
+
+##now encrypt the file. We ensure that the file is there. Even though it may be empty.
 
 import encryption
 
@@ -1100,7 +1115,3 @@ fileName = newFileName
 app = VIPER()
 
 mainloop()
-
-os.rename(newFileName,'viper')
-
-encryption.encryptAll()
