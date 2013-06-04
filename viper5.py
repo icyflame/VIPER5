@@ -219,11 +219,16 @@ class VIPER(object):
         self.frame = Frame(self.window,width=500,height=500)
         self.frame.grid()
 
-        if self.getnumrec() > 10:
-            self.frame.grid_propagate(1)
+##        if self.getnumrec() > 10:
+##
+##            self.frame.grid_propagate(1)
+##
+##        else:
+##
+##            self.frame.grid_propagate(1)
 
-        else:
-            self.frame.grid_propagate(0)
+
+            
 
     def initButtons(self):
 
@@ -299,6 +304,8 @@ class VIPER(object):
         os.rename('temp',fileName)
 
     def checkpoint(self):
+
+        return
 
         ##first take the masterKey from the file
         try:
@@ -435,22 +442,29 @@ fields empty. We will not write it to the file')
 
                 self.Lwindows.append(y)
 
-                self.frame = Frame(y)
+                z = Frame(y)
 
-                self.frame.grid()                
+                z.grid()
+
+                Label(z,text='   Serial   ',width=7).grid(row=startRow,column=serialColumn)
+
+                Label(z,text='   Username   ').grid(row=startRow,column=unColumn)
+                
+                Label(z,text='   Account   ').grid(row=startRow,column=acColumn)
+
 
             un,ac,pas,rem = isolate(i)
 
             a = isolate(i)            
 
-            Label(self.frame,text=str(counter-startRow),width=5).grid(row=counter,column=serialColumn)
+            Label(z,text=str(counter-startRow),width=7).grid(row=counter,column=serialColumn)
 
             j = un
-            Label(self.frame,text=j).grid(row=counter,column=unColumn)
+            Label(z,text=j).grid(row=counter,column=unColumn)
 
 
             j = ac
-            Label(self.frame,text=j).grid(row=counter,column=acColumn)
+            Label(z,text=j).grid(row=counter,column=acColumn)
 
             counter += 1
 
@@ -506,27 +520,34 @@ fields empty. We will not write it to the file')
 
                 self.Lwindows.append(y)
 
-                self.frame = Frame(y)
+                z = Frame(y)
 
-                self.frame.grid()                
+                z.grid()
+
+                Label(z,text='   Serial   ',width=7).grid(row=startRow,column=serialColumn)
+
+                Label(z,text='   Username   ').grid(row=startRow,column=unColumn)
+                
+                Label(z,text='   Account   ').grid(row=startRow,column=acColumn)
+
 
             un,ac,pas,rem = isolate(i)
 
             a = isolate(i)            
 
-            Label(self.frame,text=str(counter-startRow),width=5).grid(row=counter,column=serialColumn)
+            Label(z,text=str(counter-startRow),width=7).grid(row=counter,column=serialColumn)
 
             j = un
-            Label(self.frame,text=j).grid(row=counter,column=unColumn)
+            Label(z,text=j).grid(row=counter,column=unColumn)
 
 
             j = ac
-            Label(self.frame,text=j).grid(row=counter,column=acColumn)
+            Label(z,text=j).grid(row=counter,column=acColumn)
 
             thisrecord = 'Username:' + un + '\nAccount:' + ac + '\nPassword:'\
                          + pas + '\nRemarks:' + rem
 
-            Button(self.frame,text=(':See details'),\
+            Button(z,text=(':See details'),\
                                    command=self.callbackForShow(thisrecord)).grid(row=counter,\
                                                                                   column=acColumn + 1)
 
@@ -584,7 +605,6 @@ fields empty. We will not write it to the file')
         copy = self.frame    ##storing the current windows frame location
                             ##in memory for further access later.
 
-
         for i in inFile:  ##i contains one full record with all the parameters in a record
 
             if (counter - 1) % 20 == 0:
@@ -593,22 +613,29 @@ fields empty. We will not write it to the file')
 
                 self.Lwindows.append(y)
 
-                self.frame = Frame(y)
+                z = Frame(y)
 
-                self.frame.grid()                
+                z.grid()
+
+                Label(z,text='   Serial   ',width=7).grid(row=startRow,column=serialColumn)
+
+                Label(z,text='   Username   ').grid(row=startRow,column=unColumn)
+                
+                Label(z,text='   Account   ').grid(row=startRow,column=acColumn)
+
 
             un,ac,pas,rem = isolate(i)
 
             a = isolate(i)            
 
-            Label(self.frame,text=str(counter-startRow),width=5).grid(row=counter,column=serialColumn)
+            Label(z,text=str(counter-startRow),width=7).grid(row=counter,column=serialColumn)
 
             j = un
-            Label(self.frame,text=j).grid(row=counter,column=unColumn)
+            Label(z,text=j).grid(row=counter,column=unColumn)
 
 
             j = ac
-            Label(self.frame,text=j).grid(row=counter,column=acColumn)
+            Label(z,text=j).grid(row=counter,column=acColumn)
 
             old = record()
 
@@ -621,7 +648,7 @@ fields empty. We will not write it to the file')
 
             thisrecord = str(old)
             
-            Button(self.frame,text='Modify Record',\
+            Button(z,text='Modify Record',\
                                    command=self.callbackForModify(thisrecord)).grid(row=counter,column=acColumn + 1)
 
             counter += 1
@@ -749,22 +776,29 @@ to the original record. no change will be made in the file')
 
                 self.Lwindows.append(y)
 
-                self.frame = Frame(y)
+                z = Frame(y)
 
-                self.frame.grid()                
+                z.grid()
+
+                Label(z,text='   Serial   ',width=7).grid(row=startRow,column=serialColumn)
+
+                Label(z,text='   Username   ').grid(row=startRow,column=unColumn)
+                
+                Label(z,text='   Account   ').grid(row=startRow,column=acColumn)
+
 
             un,ac,pas,rem = isolate(i)
 
             a = isolate(i)            
 
-            Label(self.frame,text=str(counter-startRow),width=5).grid(row=counter,column=serialColumn)
+            Label(z,text=str(counter-startRow),width=7).grid(row=counter,column=serialColumn)
 
             j = un
-            Label(self.frame,text=j).grid(row=counter,column=unColumn)
+            Label(z,text=j).grid(row=counter,column=unColumn)
 
 
             j = ac
-            Label(self.frame,text=j).grid(row=counter,column=acColumn)
+            Label(z,text=j).grid(row=counter,column=acColumn)
 
             old = record()
 
@@ -777,7 +811,7 @@ to the original record. no change will be made in the file')
 
             thisrecord = str(old)
             
-            Button(self.frame,text='Delete this Record',\
+            Button(z,text='Delete this Record',\
                                    command=self.callbackForDelete(thisrecord)).grid(row=counter,column=acColumn + 1)
 
             counter += 1
