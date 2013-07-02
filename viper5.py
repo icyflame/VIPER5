@@ -305,8 +305,6 @@ class VIPER(object):
 
     def checkpoint(self):
 
-        return
-
         ##first take the masterKey from the file
         try:
 
@@ -1061,8 +1059,7 @@ are: %s' % str(self.getnumrec()))
         c+=1
         Label(r,text='See the copying file for more details.',font=self.big).grid(row=c,column=0)
         c+=1
-        Label(r,text='Application will quit in 8 seconds.',font=self.big).grid(row=c,column=0)
-        c+=1        
+
 
     def quitwin(self,event=None):
 
@@ -1106,67 +1103,76 @@ are: %s' % str(self.getnumrec()))
         encryption.encryptAll()
 
         self.window.after(8000,self.window.destroy)
+        
+        
+def main():
+
+	##checking to see if the file is there. If not create a new empty file.
 
 
-##checking to see if the file is there. If not create a new empty file.
+	try:
 
+	    filin = open('viper','r')
 
-try:
+	except IOError:
 
-    filin = open('viper','r')
+	    filin = open('viper','w')
 
-except IOError:
+	filin.close()
 
-    filin = open('viper','w')
+	##now encrypt the file. We ensure that the file is there. Even though it may be empty.
 
-filin.close()
+	import encryption
 
-##now encrypt the file. We ensure that the file is there. Even though it may be empty.
+	filin = open('viper','r')
 
-import encryption
+	line = filin.readline()
 
-filin = open('viper','r')
+	if not (line.find('username') == -1):  ##if word "username" is there in the line
 
-line = filin.readline()
+	    filin.close()
 
-if not line.find('username') == -1:
+	    encryption.encryptAll()
 
-    filin.close()
+	encryption.decryptAll()
 
-    encryption.encryptAll()
+	##Renaming the file for better safety. Using a '.' before
+	##the filename ensures that it remains hidden in unix systems.
 
-encryption.decryptAll()
+	import os
+	import time
+	import hashlib        
 
-##Renaming the file for better safety. Using a '.' before
-##the filename ensures that it remains hidden in unix systems.
+	newFileName = '.' + hashlib.sha1(str(time.time())).hexdigest()
 
-import os
-import time
-import hashlib        
+	os.rename('viper',newFileName)
+	
+	
+	global fileName
 
-newFileName = '.' + hashlib.sha1(str(time.time())).hexdigest()
+	fileName = newFileName
 
-os.rename('viper',newFileName)
+	##there is a possiblity that the user may close the application without
+	##pressing the quit button. But by pressin the close button in the top
+	##right corner. To handle this we need a flag:
 
-fileName = newFileName
+	flag = False  ##if encryption is done then this will be made to True.
 
-##there is a possiblity that the user may close the application without
-##pressing the quit button. But by pressin the close button in the top
-##right corner. To handle this we need a flag:
+	##Inintialising the application
+		      
+	app = VIPER()
 
-flag = False  ##if encryption is done then this will be made to True.
+	mainloop()
 
-##Inintialising the application
-              
-app = VIPER()
+	if not flag:
 
-mainloop()
+	    os.rename(fileName,'viper')
 
+	    encryption.encryptAll()
 
-if not flag:
+	    self.window.after(8000,self.window.destroy)
+	    
 
-    os.rename(fileName,'viper')
+if __name__=='__main__':
 
-    encryption.encryptAll()
-
-    self.window.after(8000,self.window.destroy)
+	main()	 
