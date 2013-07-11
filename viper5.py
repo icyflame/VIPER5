@@ -91,6 +91,10 @@ import tkFont
 
 import string
 
+import os
+
+import encryption
+
 salt = 'developedbysiddharthkannan'
 
 SHOW_TOPBAR = True  ##varibale will control whether the top bar with the three close, minimise, restore buttons
@@ -296,8 +300,6 @@ class VIPER(object):
     def rearrangeFiles(self):
 
         '''will remove the basic file and rename the file temp as viper'''
-
-        import os
 
         os.remove(fileName)
 
@@ -902,7 +904,6 @@ ord:'\
 
             else:
 
-                import os
                 os.remove('temp')             
 
         return callback
@@ -1031,7 +1032,7 @@ are: %s' % str(self.getnumrec()))
         global flag
         flag = True
         
-        os.rename(newFileName,'viper')
+        os.rename(fileName,'viper')
 
         encryption.encryptAll()
 
@@ -1095,9 +1096,10 @@ are: %s' % str(self.getnumrec()))
         
         ##Do the essential before the asthetics!
         
-        os.rename(newFileName,'viper')
+        os.rename(fileName,'viper')
 
         global flag
+        
         flag = True
 
         encryption.encryptAll()
@@ -1122,8 +1124,6 @@ def main():
 
 	##now encrypt the file. We ensure that the file is there. Even though it may be empty.
 
-	import encryption
-
 	filin = open('viper','r')
 
 	line = filin.readline()
@@ -1139,22 +1139,22 @@ def main():
 	##Renaming the file for better safety. Using a '.' before
 	##the filename ensures that it remains hidden in unix systems.
 
-	import os
 	import time
 	import hashlib        
 
 	newFileName = '.' + hashlib.sha1(str(time.time())).hexdigest()
 
-	os.rename('viper',newFileName)
-	
+	os.rename('viper',newFileName)	
 	
 	global fileName
 
 	fileName = newFileName
 
 	##there is a possiblity that the user may close the application without
-	##pressing the quit button. But by pressin the close button in the top
-	##right corner. To handle this we need a flag:
+	##pressing the quit button, but by pressin the close button in the top
+	##right corner. To handle this we need a flag:	
+	
+	global flag
 
 	flag = False  ##if encryption is done then this will be made to True.
 
@@ -1168,10 +1168,7 @@ def main():
 
 	    os.rename(fileName,'viper')
 
-	    encryption.encryptAll()
-
-	    self.window.after(8000,self.window.destroy)
-	    
+	    encryption.encryptAll()	    
 
 if __name__=='__main__':
 
